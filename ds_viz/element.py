@@ -5,13 +5,21 @@ from collections import defaultdict
 
 class Element:
     def __init__(self):
-        self.position = Vector(0,0)
+        self._position = Vector(0,0)
         self.width = 0
         self.height = 0
         self.anchor = defaultdict(Vector)
         self.tags = set()
         self.style = []
         self.parent = None
+
+    @property
+    def position(self):
+        return self._position
+
+    @position.setter
+    def position(self, x, y = None):
+        self._position = Vector(x, y)
 
     def globalposition(self):
         if self.parent is None:

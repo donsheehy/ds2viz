@@ -21,19 +21,20 @@ class Canvas:
 
     def point(self, point, style = '_point'):
         for s in self.styles[style]:
-            self._primitives.append(Circle(point, s['radius'], s))
+            # TODO: handle shifting and radius adjustments.
+            self._primitives.append(DP_Circle(point, s['radius'], s))
 
     def line(self, a, b, style = '_line'):
         for s in self.styles[style]:
             # arrow heads?
-            self._primitives.append(Line(a, b, s))
+            self._primitives.append(DP_Line(a, b, s))
 
     def circle(self, center, radius, style = '_circle'):
         for s in self.styles[style]:
             # newcenter = center + s['center_offset']
             # newradius = radius + s['radius_adjust']
             # self._primitives.append(Circle(newcenter, newradius, s))
-            self._primitives.append(Circle(center, radius, s))
+            self._primitives.append(DP_Circle(center, radius, s))
 
     def rectangle(self, topleft, width, height, style = '_rectangle'):
         for s in self.styles[style]:
@@ -41,11 +42,16 @@ class Canvas:
             b = a + Vector(width, 0)
             c = a + Vector(width, height)
             d = a + Vector(0, height)
-            self._primitives.append(Polygon([a,b,c,d], s))
+            self._primitives.append(DP_Polygon([a,b,c,d], s))
 
     def text(self, text, position, style = '_text'):
         for s in self.styles[style]:
-            self._primitives.append(Text(text, position, s))
+            self._primitives.append(DP_Text(text, position, s))
+
+    def addprimitive(self, p):
+        # TODO: record insertion time, extract z-order
+        # maybe put it in an orderedlist.
+        self._primitives.append(p)
 
     def primitives(self):
         # Sort the primitives
@@ -58,8 +64,4 @@ class Canvas:
         pass
 
     def svgout(self, filename = None):
-        engine = SVGEngine(self)
-        # engine.draw_rect((0, 0), self.width, self.height)
-        # for shape in self.shapes:
-        #     shape.svg(engine)
-        return str(engine)
+        return str(SVGEngine(self))

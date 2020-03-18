@@ -172,7 +172,9 @@ Dealing with defaults
 Lists of styles
 support z order as a style feature.
 
-A arrow heads part of the style?
+Are arrow heads part of the style?
+
+Styles could just be namedtuples that start from a deault and use the replace method
 
 ### Drawing Data Structures
 
