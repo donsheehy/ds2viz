@@ -24,7 +24,7 @@ from ds_viz.datastructures import VizList
 
 canvas = Canvas(600, 200)
 
-L = [1,2,3, 'hello']
+L = [1,2,3, 'hellooo']
 VizList(L).draw(canvas)
 
 print(canvas.svgout())

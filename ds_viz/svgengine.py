@@ -21,13 +21,13 @@ class SVGEngine:
         size = (canvas.width, canvas.height)
         self.svg_doc = svgwrite.Drawing(None, size)
         for p in canvas.primitives():
-            if isinstance(p, Circle):
+            if isinstance(p, DP_Circle):
                 self.draw_circle(p)
-            elif isinstance(p, Line):
+            elif isinstance(p, DP_Line):
                 self.draw_line(p)
-            elif isinstance(p, Polygon):
+            elif isinstance(p, DP_Polygon):
                 self.draw_polygon(p)
-            elif isinstance(p, Text):
+            elif isinstance(p, DP_Text):
                 self.draw_text(p)
             else:
                 raise TypeError('The drawing primitive has an unknown type.')
