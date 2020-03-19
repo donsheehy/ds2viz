@@ -28,6 +28,7 @@ L = [1,2,3, 'hellooo']
 VizList(L).draw(canvas)
 
 print(canvas.svgout())
+canvas.pdfsave('shortlist.pdf')
 ```
 
 <!-- ![A simple list](./list_example.png) -->

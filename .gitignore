@@ -3,7 +3,6 @@
 *.synctex.gz
 *.fdb_latexmk
 *.aux
-*.pdf
 
 .DS_Store
 

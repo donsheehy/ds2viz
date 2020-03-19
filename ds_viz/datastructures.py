@@ -11,8 +11,9 @@ class VizList(Group):
 
 
 class VizBST(Group):
-    def __init__(self, n):
+    def __init__(self, n, position = (0,0)):
         super().__init__()
+        self.position = position
         self.left = VizBST(n.left) if n.left else Empty()
         self.right = VizBST(n.right) if n.right else Empty()
         self.root = Circle(22, label = str(n.key))

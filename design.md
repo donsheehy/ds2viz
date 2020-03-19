@@ -122,7 +122,13 @@ Layout properties will affect how the primitives are defined.  These could inclu
 ### Image Engines
 
 An `ImageEngine` provides a thin wrapper for translating primitives into whatever form is needed to produce an image file.
+It also translates the comparable drawing styles.
 
+### Vocabulary for Styles
+
+Whenever possible, I want to opt for the web standard vocabulary for style principles.
+This means, in particular, using `'font_family'` instead of `'fontfamily'`.
+Ideally, a style would look a lot like CSS.
 
 ---
 

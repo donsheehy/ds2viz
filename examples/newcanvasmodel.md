@@ -11,6 +11,6 @@ c.circle((100,100), 40, 'stark')
 c.rectangle((250,20), 100, 200)
 c.line((100,200), (300, 150))
 c.text('hello', (140, 300))
-# print(c.svgout())
-print(SVGEngine(c))
+print(c.svgout())
+# print(SVGEngine(c))
 ```

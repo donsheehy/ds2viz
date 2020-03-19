@@ -10,23 +10,26 @@ from ds_viz.datastructures import VizBST
 from ds_viz.canvas import Canvas
 
 T = BST()
-for i in [7,2,1,4,3,16,11,12,9,10,8]:
+for i in [7,2,1,4,3,6,11,9,10,8]:
     T[i] = i
 
 canvas = Canvas(600, 400)
-mytree = VizBST(T._root)
-mytree.position = (20, 10)
+mytree = VizBST(T._root, (20, 10))
 mytree.draw(canvas)
 # mytree.left.drawanchors(canvas)
 
-print(canvas.svgout())
+from ds_viz.gizehengine import GizehEngine
+
+# print(canvas.pngout())
+# canvas.pdfsave('bst.pdf')
+canvas.pngsave('bst.png')
 ```
 
-
+---
 
 We should be able to highlight the path taken by a search.
 
-Here is the old way.
+Here is the old way. (These imports don't even exist anymore.)
 
 ```python
 from ds_viz.gizehcanvas import Canvas

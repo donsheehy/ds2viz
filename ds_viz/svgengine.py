@@ -5,7 +5,7 @@ styledefaults = {'radius': 3,
                  'fill': (1,1,1),
                  'stroke': (0,0,0),
                  'stroke_width' : 0,
-                 'font_size': '24pt',
+                 'font_size': 24,
                  'font_family' : 'monospace',
                  'font_weight': 'normal',
                  'text_anchor' : 'middle',
@@ -19,7 +19,7 @@ def rgbtohex(rgb):
 class SVGEngine:
     def __init__(self, canvas, filename = None):
         size = (canvas.width, canvas.height)
-        self.svg_doc = svgwrite.Drawing(None, size)
+        self.svg_doc = svgwrite.Drawing(filename, size)
         for p in canvas.primitives():
             if isinstance(p, DP_Circle):
                 self.draw_circle(p)
@@ -77,6 +77,9 @@ class SVGEngine:
                            )
         svgtext = self.svg_doc.text(text.text, text.position, **props)
         self.svg_doc.add(svgtext)
+
+    def svgsave(self):
+        svg_doc.save()
 
     def __str__(self):
         return self.svg_doc.tostring()

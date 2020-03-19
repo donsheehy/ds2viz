@@ -1,4 +1,5 @@
 from ds_viz.svgengine import SVGEngine
+from ds_viz.gizehengine import PDFEngine, PNGEngine
 from ds_viz.default_styles import default_styles
 from ds_viz.primitives import *
 from ds_viz.vector import Vector
@@ -57,11 +58,17 @@ class Canvas:
         # Sort the primitives
         return iter(self._primitives)
 
-    def pdfout(self, filename):
-        pass
+    def pdfsave(self, filename):
+        PDFEngine(self, filename).pdfsave()
 
-    def pngout(self, filename = None):
-        pass
+    def pngsave(self, filename):
+        PNGEngine(self, filename).pngsave()
+
+    def svgsave(self, filename):
+        SVGEngine(self, filename).svgsave()
+
+    def pngout(self):
+        return str(PNGEngine(self))
 
     def svgout(self, filename = None):
         return str(SVGEngine(self))
