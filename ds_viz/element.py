@@ -21,28 +21,6 @@ class Element:
     def position(self, x, y = None):
         self._position = Vector(x, y)
 
-    def relposition(self, coords):
-        current = self
-        position = current.position
-        while current is not coords:
-            position += current.position
-            current = current.parent
-        return position
-
-    def ancestors(self):
-        current = self
-        ancestorlist = []
-        while current is not None:
-            ancestorlist.append(current)
-            current = current.parent
-        return ancestorlist
-
-    def lca(self, other):
-        for ancestor in self.ancestors():
-            if ancestor in other.ancestors():
-                return ancestor
-        return None
-
     def globalposition(self):
         if self.parent is None:
             return self.position
@@ -59,16 +37,6 @@ class Element:
             parentposition = self.parent.globalposition()
         otherposition = other.globalposition() + other.anchor[otheranchor]
         return otherposition - self.anchor[anchor] - parentposition
-
-        # coords = self.lca(other)
-        # if coords is None:
-        #     otherposition = other.globalposition() + other.anchor[otheranchor]
-        #     selfposition = self.globalposition() + self.anchor[anchor]
-        #     difference = otherposition - selfposition
-        # else:
-        #     difference = coords.a(other, otheranchor) - coords.a(self, anchor)
-        # return difference - self.relposition(coords)
-
 
     def align(self, anchor, other, otheranchor):
         self.position = self._align(anchor, other, otheranchor)
