@@ -3,6 +3,15 @@ from ds_viz.gizehengine import PDFEngine, PNGEngine
 from ds_viz.default_styles import default_styles
 from ds_viz.primitives import *
 from ds_viz.vector import Vector
+from contextlib import contextmanager
+
+@contextmanager
+def svg_plus_pdf(width, height, filename, styles = default_styles):
+    canvas = Canvas(width, height, default_styles)
+    yield canvas
+    canvas.svgsave(filename + '.svg')
+    canvas.pdfsave(filename + '.pdf')
+    print(canvas.svgout())
 
 class Canvas:
     """
@@ -28,7 +37,7 @@ class Canvas:
     def line(self, a, b, style = '_line'):
         for s in self.styles[style]:
             # arrow heads?
-            self._primitives.append(DP_Line(a, b, s))
+            self._primitives.append(DP_Polyline([a, b], s))
 
     def circle(self, center, radius, style = '_circle'):
         for s in self.styles[style]:
@@ -45,6 +54,14 @@ class Canvas:
             d = a + Vector(0, height)
             self._primitives.append(DP_Polygon([a,b,c,d], s))
 
+    def polyline(self, points, style = '_line'):
+        for s in self.styles[style]:
+            self.addprimitive(DP_Polyline(points, s))
+
+    def bezier(self, points, style = '_line'):
+        for s in self.styles[style]:
+            self.addprimitive(DP_Bezier(points, s))        
+
     def text(self, text, position, style = '_text'):
         for s in self.styles[style]:
             self._primitives.append(DP_Text(text, position, s))
@@ -59,13 +76,13 @@ class Canvas:
         return iter(self._primitives)
 
     def pdfsave(self, filename):
-        PDFEngine(self, filename).pdfsave()
+        PDFEngine(self, filename).save()
 
     def pngsave(self, filename):
-        PNGEngine(self, filename).pngsave()
+        PNGEngine(self, filename).save()
 
     def svgsave(self, filename):
-        SVGEngine(self, filename).svgsave()
+        SVGEngine(self, filename).save()
 
     def pngout(self):
         return str(PNGEngine(self))

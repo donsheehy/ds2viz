@@ -36,6 +36,7 @@ default_styles['_circle'] =[{'fill' : (1,1,1),
 default_styles['_line'] =[{'fill' : (1,1,1),
                      'stroke': (0,0,0),
                      'stroke_width' : 2,
+                     'fill' : None
                   }]
 
 default_styles['_rectangle'] =[{'fill' : (1,1,1),
