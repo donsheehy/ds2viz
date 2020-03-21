@@ -20,9 +20,9 @@ mytree.draw(canvas)
 
 from ds_viz.gizehengine import GizehEngine
 
-# print(canvas.pngout())
+print(canvas.pngout())
 # canvas.pdfsave('bst.pdf')
-canvas.pngsave('bst.png')
+# canvas.pngsave('bst.png')
 ```
 
 ---

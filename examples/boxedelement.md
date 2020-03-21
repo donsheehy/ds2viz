@@ -5,18 +5,14 @@ from ds_viz.vector import Vector
 
 atext = Text('top')
 a = Boxed(atext)
-b = Boxed(Text('middle'))
+btext = Text('middle')
+b = Boxed(btext)
 c = Boxed(Text('bottom'))
-d = Boxed(Text('other!!!!'))
+d = Boxed(Text('other!'))
 # g = VGroup([HGroup([a,b]), c])
 e = VGroup([a,b,c])
 f = HGroup([e, d])
-g = VGroup([Boxed(Text(str(i))) for i in range(4)] + [f])
-# g = VGroup([a])
-atext.align('center', a, 'center')
-
-# g = VGroup([a,b,c])
-
+g = VGroup([Boxed(Text(str(i))) for i in range(0,70,24)] + [f])
 canvas = Canvas(600,400)
 g.position = Vector(200,100)
 g.draw(canvas)

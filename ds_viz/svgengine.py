@@ -1,36 +1,18 @@
 import svgwrite
 from ds_viz.primitives import *
-
-styledefaults = {'radius': 3,
-                 'fill': (1,1,1),
-                 'stroke': (0,0,0),
-                 'stroke_width' : 0,
-                 'font_size': 24,
-                 'font_family' : 'monospace',
-                 'font_weight': 'normal',
-                 'text_anchor' : 'middle',
-                 'dominant_baseline' : 'central',
-                }
+from ds_viz.imageengine import ImageEngine, styledefaults
 
 def rgbtohex(rgb):
+    if rgb is None:
+        return 'none'
     colors = [hex(int(x * 255 + 256))[-2:] for x in rgb]
     return "#" + "".join(colors[:3])
 
-class SVGEngine:
+class SVGEngine(ImageEngine):
     def __init__(self, canvas, filename = None):
         size = (canvas.width, canvas.height)
         self.svg_doc = svgwrite.Drawing(filename, size)
-        for p in canvas.primitives():
-            if isinstance(p, DP_Circle):
-                self.draw_circle(p)
-            elif isinstance(p, DP_Line):
-                self.draw_line(p)
-            elif isinstance(p, DP_Polygon):
-                self.draw_polygon(p)
-            elif isinstance(p, DP_Text):
-                self.draw_text(p)
-            else:
-                raise TypeError('The drawing primitive has an unknown type.')
+        super().__init__(canvas, filename)
 
     def props(self, props, *required_props):
         output = {}
@@ -50,17 +32,32 @@ class SVGEngine:
         svgcircle = self.svg_doc.circle(center, r = radius, **props)
         self.svg_doc.add(svgcircle)
 
-    def draw_line(self, line):
-        props = self.props(line.props, 'stroke', 'stroke_width')
-        svgline = self.svg_doc.line(line.start, line.end, **props)
-        self.svg_doc.add(svgline)
+    def draw_polyline(self, polyline):
+        props = self.props(polyline.props, 'stroke', 'stroke_width', 'fill')
+        svgpolyline = self.svg_doc.path(**props)
+        points = iter(polyline.points)
+        svgpolyline.push("M%f %f" % tuple(next(points)))
+        for p in points:
+            svgpolyline.push("L%f %f" % tuple(p))
+        self.svg_doc.add(svgpolyline)
+
+    def draw_bezier(self, bezier):
+        props = self.props(bezier.props, 'stroke', 'stroke_width', 'fill')
+        svgbezier = self.svg_doc.path(**props)
+        points = iter(bezier.points)
+        svgbezier.push("M%f %f" % tuple(next(points)))
+        for p in points:
+            svgbezier.push("C%f %f" % tuple(p))
+            svgbezier.push("%f %f" % tuple(next(points)))
+            svgbezier.push("%f %f" % tuple(next(points)))
+        self.svg_doc.add(svgbezier)
 
     def draw_polygon(self, polygon):
         props = self.props(polygon.props, 'stroke', 'stroke_width', 'fill')
         points = polygon.points
         svgpolygon = self.svg_doc.path(**props)
         svgpolygon.push("M%f %f" % tuple(points[0]))
-        for i, p in enumerate(points):
+        for p in points:
             svgpolygon.push("L%f %f" % tuple(p))
         svgpolygon.push("L%f %f" % tuple(points[0]))
         self.svg_doc.add(svgpolygon)
@@ -78,8 +75,8 @@ class SVGEngine:
         svgtext = self.svg_doc.text(text.text, text.position, **props)
         self.svg_doc.add(svgtext)
 
-    def svgsave(self):
-        svg_doc.save()
+    def save(self):
+        self.svg_doc.save()
 
     def __str__(self):
         return self.svg_doc.tostring()

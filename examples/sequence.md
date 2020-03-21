@@ -25,7 +25,9 @@ from ds_viz.datastructures import VizList
 canvas = Canvas(600, 200)
 
 L = [1,2,3, 'hellooo']
-VizList(L).draw(canvas)
+L = VizList(L)
+L.position = (1,1)
+L.draw(canvas)
 
 print(canvas.svgout())
 canvas.pdfsave('shortlist.pdf')

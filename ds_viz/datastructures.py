@@ -1,5 +1,28 @@
 from ds_viz.element import *
 
+class SCurve(Element):
+    def __init__(self, start, end, vertical = False):
+        self.start = start
+        self.end = end
+        self.vertical = vertical
+
+    def draw(self, canvas):
+        right = Vector(60, 0)
+        u = self.start + right
+        v = self.end - right
+        canvas.bezier([self.start, u, v, self.end])
+
+
+class VizNamedReference(HGroup):
+    def __init__(self, name):
+        txt = Boxed(Text(name))
+        pt = Circle(5, style = '_point')
+        bpt = Boxed(pt)
+        bpt.width = 25
+        super().__init__([txt, bpt])
+        self.addanchor('source', self.a(self.elements[1], 'center'))
+        pt.align('center', bpt, 'center')
+
 class VizList(Group):
     def __init__(self, L):
         super().__init__()
@@ -8,7 +31,6 @@ class VizList(Group):
         self.height = self.L.height
         self.setboxanchors()
         self.addelement(self.L)
-
 
 class VizBST(Group):
     def __init__(self, n, position = (0,0)):
@@ -23,11 +45,11 @@ class VizBST(Group):
             ch.valign('top', self.root, 'bottom')
             # ch.position.y += 20 # Optionally stretch the tree vertically.
             # This should use the padding in the style.
-        root = self.root.a('center')
+        root = self.a(self.root, 'center')
         self.addanchor('root', root)
         for child in [self.left, self.right]:
             if child:
-                childroot = child.a('root')
+                childroot = self.a(child, 'root')
                 self.addelement(Line(root, childroot))
                 self.addelement(child)
         self.addelement(self.root)

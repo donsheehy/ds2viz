@@ -21,6 +21,28 @@ class Element:
     def position(self, x, y = None):
         self._position = Vector(x, y)
 
+    def relposition(self, coords):
+        current = self
+        position = current.position
+        while current is not coords:
+            position += current.position
+            current = current.parent
+        return position
+
+    def ancestors(self):
+        current = self
+        ancestorlist = []
+        while current is not None:
+            ancestorlist.append(current)
+            current = current.parent
+        return ancestorlist
+
+    def lca(self, other):
+        for ancestor in self.ancestors():
+            if ancestor in other.ancestors():
+                return ancestor
+        return None
+
     def globalposition(self):
         if self.parent is None:
             return self.position
@@ -31,7 +53,22 @@ class Element:
         self.anchor[label] = Vector(v)
 
     def _align(self, anchor, other, otheranchor):
-        return other.a(otheranchor) - self.anchor[anchor]
+        if self.parent is None:
+            parentposition = Vector(0,0)
+        else:
+            parentposition = self.parent.globalposition()
+        otherposition = other.globalposition() + other.anchor[otheranchor]
+        return otherposition - self.anchor[anchor] - parentposition
+
+        # coords = self.lca(other)
+        # if coords is None:
+        #     otherposition = other.globalposition() + other.anchor[otheranchor]
+        #     selfposition = self.globalposition() + self.anchor[anchor]
+        #     difference = otherposition - selfposition
+        # else:
+        #     difference = coords.a(other, otheranchor) - coords.a(self, anchor)
+        # return difference - self.relposition(coords)
+
 
     def align(self, anchor, other, otheranchor):
         self.position = self._align(anchor, other, otheranchor)
@@ -63,8 +100,15 @@ class Element:
         for a in self.anchor.values():
             canvas.point(position + a)
 
-    def a(self, anchor):
-        return self.anchor[anchor] + self.position
+    def a(self, element, anchor):
+        parent = element
+        position = element.anchor[anchor]
+        while parent is not self and parent is not None:
+            # if parent is None:
+            #     raise TypeError("asking for None anchor!", anchor, parent, self)
+            position += parent.position
+            parent = parent.parent
+        return position
 
 class Text(Element):
     def __init__(self, text, style = '_text'):
@@ -168,6 +212,9 @@ class Group(Element):
     def addelement(self, element):
         self.elements.append(element)
         element.parent = self
+
+    def __len__(self):
+        return len(self.elements)
 
 class HGroup(Group):
     def __init__(self, elements):

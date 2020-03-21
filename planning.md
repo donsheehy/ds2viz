@@ -1,13 +1,27 @@
 # Planning for ds_viz
 
+## Public Launch
+
+- [ ] Get dependencies into `setup.py`
+- [ ] put it on pypi
+- [ ] do a build test for ds book in fresh pipenv
+- [ ] update note in users guide to the data structures book
+
+
 ## Styles need to be converted to TOML format.
 
 This will make them easier to read and write.
+
+## Alignment should happen w.r.t. least common ancestor
 
 ## Colors Need a consistent format
 
 Sticking with webstandard hex is probably best.
 Not sure about opacity?
+
+## Better Boxes
+
+Sides should be proper attributes.
 
 ## Deal properly with margin and padding
 
@@ -18,14 +32,12 @@ We need to decide how margins and padding work for alignment.
 Traditionally, padding is a minimum guarantee that is not additive.
 Adjacent elements are spaced so the distance is the max of their padding values.
 
-## Polylines
+## Primitives updates
 
-This is actually more primitive than Line.
+Polylines are more primitive than Lines.
 It should replace `DP_Line` as the main primitive for lines.
 
-## Bezier Curves
-
-
+Bezier Curves.  It's time.
 
 ## Arrowheads and curve decorations
 
