@@ -1,13 +1,13 @@
 from ds_viz.vector import Vector
-# from ds_viz.style import bigpoint, blackline, jeffeline
 # from ds_viz.default_styles import default_styles
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+
+Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 
 class Element:
     def __init__(self):
         self._position = Vector(0,0)
-        self.width = 0
-        self.height = 0
+        self._box = Box(0, 0, 0, 0)
         self.anchor = defaultdict(Vector)
         self.tags = set()
         self.style = []
@@ -21,81 +21,124 @@ class Element:
     def position(self, x, y = None):
         self._position = Vector(x, y)
 
+    @property
+    def _top(self):
+        return self._box.top
+
+    @property
+    def _right(self):
+        return self._box.right
+
+    @property
+    def _bottom(self):
+        return self._box.bottom
+
+    @property
+    def _left(self):
+        return self._box.left
+
+    @property
+    def top(self):
+        return self._top + self.position.y
+
+    @property
+    def right(self):
+        return self._right + self.position.x
+
+    @property
+    def bottom(self):
+        return self._bottom + self.position.y
+
+    @property
+    def left(self):
+        return self._left + self.position.x
+
+    @property
+    def width(self):
+        return self._right - self._left
+
+    @property
+    def height(self):
+        return self._bottom - self._top
+
     def globalposition(self):
         if self.parent is None:
             return self.position
         else:
             return self.position + self.parent.globalposition()
 
-    def addanchor(self, label, v):
+    def setanchor(self, label, v):
         self.anchor[label] = Vector(v)
 
-    def _align(self, anchor, other, otheranchor):
-        if self.parent is None:
-            parentposition = Vector(0,0)
-        else:
-            parentposition = self.parent.globalposition()
-        otherposition = other.globalposition() + other.anchor[otheranchor]
-        return otherposition - self.anchor[anchor] - parentposition
+    def _align(self, anchor, point):
+        return Vector(point) - self._a(anchor)
 
-    def align(self, anchor, other, otheranchor):
-        self.position = self._align(anchor, other, otheranchor)
+    def align(self, anchor, point):
+        self.position = self._align(anchor, point)
 
-    def valign(self, anchor, other, otheranchor):
-        self.position.y = self._align(anchor, other, otheranchor).y
+    def valign(self, anchor, point):
+        self.position.y = self._align(anchor, point).y
 
-    def halign(self, anchor, other, otheranchor):
-        self.position.x = self._align(anchor, other, otheranchor).x
-
-    def setboxanchors(self):
-        self.addanchor('left', (0, self.height/2))
-        self.addanchor('right', (self.width, self.height/2))
-        self.addanchor('top', (self.width/2, 0))
-        self.addanchor('bottom', (self.width/2, self.height))
-        self.addanchor('center', (self.width/2, self.height/2))
-        self.addanchor('topleft', (0, 0))
+    def halign(self, anchor, point):
+        self.position.x = self._align(anchor, point).x
 
     def setwidth(self, width):
-        self.width = width
-        self.setboxanchors()
+        t, r, b, l = self._box
+        dwidth = width - self.width
+        self._box = Box(t, r + dwidth, b, l)
 
     def setheight(self, height):
-        self.height = height
-        self.setboxanchors()
+        t, r, b, l = self._box
+        dheight = height - self.height
+        self._box = Box(t, r, b + dheight, l)
 
-    def drawanchors(self, canvas):
+    def drawbox(self, canvas):
         position = self.globalposition()
-        for a in self.anchor.values():
-            canvas.point(position + a)
+        anchors = ['top', 'right', 'bottom', 'left', 'topleft', 'topright',
+                   'bottomleft', 'bottomright', 'center']
+        lines = [('topleft', 'topright'),
+                 ('topright', 'bottomright'),
+                 ('bottomright', 'bottomleft'),
+                 ('bottomleft', 'topleft')]
+        for start, end in lines:
+            canvas.line(position + self._a(start), position + self._a(end))
+        for anchor in anchors:
+            canvas.point(position + self._a(anchor))
 
-    def a(self, element, anchor):
-        parent = element
-        position = element.anchor[anchor]
-        while parent is not self and parent is not None:
-            # if parent is None:
-            #     raise TypeError("asking for None anchor!", anchor, parent, self)
-            position += parent.position
-            parent = parent.parent
-        return position
+    def _a(self, anchor):
+        verticalcenter = (self._top + self._bottom) / 2
+        horizontalcenter = (self._left + self._right) / 2
+        self.anchor.update({
+                'top': Vector(horizontalcenter, self._top),
+                'right': Vector(self._right, verticalcenter),
+                'bottom': Vector(horizontalcenter, self._bottom),
+                'left': Vector(self._left, verticalcenter),
+                'center': Vector(horizontalcenter, verticalcenter),
+                'topleft': Vector(self._left, self._top),
+                'topright': Vector(self._right, self._top),
+                'bottomright': Vector(self._right, self._bottom),
+                'bottomleft': Vector(self._left, self._bottom),
+            })
+        return self.anchor[anchor]
+
+    def a(self, anchor):
+        return self.position + self._a(anchor)
 
 class Text(Element):
     def __init__(self, text, style = '_text'):
         super().__init__()
         self.style = style
         self.text = text
-        # These really will depend on the fontfamily and size.
-        self.width = 20 * len(text)
-        self.height = 30
-        self.setboxanchors()
+        # The size will depend on the fontfamily and size.
+        self._box = Box(0, 17 * len(text), 30, 0)
 
     def draw(self, canvas):
-        pos = self.globalposition() + self.anchor['center']
+        pos = self.globalposition() + self._a('center')
         canvas.text(self.text, pos, self.style)
 
 class Empty(Element):
     def __init__(self):
         super().__init__()
-        self.setboxanchors()
 
     def draw(self, canvas):
         pass
@@ -115,13 +158,14 @@ class Boxed(Element):
         assert(self.margin == 0)
         vshift = self.margin + self.padding
         hshift = self.margin + self.padding
-        self.width = element.width + 2 * hshift
-        self.height = element.height + 2 * vshift
-        self.setboxanchors()
-        element.align('center', self, 'center')
+        self._box = Box(0,
+                        element.width + 2 * hshift,
+                        element.height + 2 * vshift,
+                        0)
+        self.alignelement()
 
     def draw(self, canvas):
-        topleft = self.globalposition() + self.anchor['topleft'] + Vector(self.margin, self.margin)
+        topleft = self.globalposition() + self._a('topleft') + Vector(self.margin, self.margin)
         canvas.rectangle(topleft,
                              self.width,
                              self.height,
@@ -129,22 +173,34 @@ class Boxed(Element):
                              )
         self.element.draw(canvas)
 
+    def alignelement(self):
+        self.element.align('center', self._a('center'))
+
+    def setwidth(self, width):
+        super().setwidth(width)
+        self.alignelement()
+
+    def setheight(self, width):
+        super().setheight(width)
+        self.alignelement()
+
 class Circle(Element):
     def __init__(self, radius = 20, label = None, style = '_circle'):
         super().__init__()
-        self.width = self.height = 2 * radius
-        self.setboxanchors()
+        margin = 5
+        size = 2 * (radius + margin)
+        self._box = Box(0, size, size, 0)
         self.style = style
         if label is not None:
             self.label = Text(str(label))
             self.label.parent = self
-            self.label.align('center', self, 'center')
+            self.label.align('center', self._a('center'))
         else:
             self.label= None
         self.radius = radius
 
     def draw(self, canvas):
-        center = self.globalposition() + self.anchor['center']
+        center = self.globalposition() + self._a('center')
         canvas.circle(center, self.radius, self.style)
         if self.label is not None:
             self.label.draw(canvas)
@@ -153,14 +209,31 @@ class Line(Element):
     def __init__(self, a, b, style = '_line'):
         super().__init__()
         self.style = style
-        self.anchor['a'] = a
-        self.anchor['b'] = b
+        start = Vector(a)
+        end = Vector(b)
+        self._box = Box(min(start.y, end.y),
+                        max(start.x, end.x),
+                        max(start.y, end.y),
+                        min(start.x, end.x)
+                       )
+        self.setanchor('start', start)
+        self.setanchor('end', end)
 
     def draw(self, canvas):
         pos = self.globalposition()
-        a = pos + self.anchor['a']
-        b = pos + self.anchor['b']
+        a = pos + self._a('start')
+        b = pos + self._a('end')
         canvas.line(a, b, self.style)
+
+class SCurve(Line):
+    def draw(self, canvas):
+        right = Vector(60, 0)
+        pos = self.globalposition()
+        a = pos + self._a('start')
+        b = pos + self._a('end')
+        u = a + right
+        v = b - right
+        canvas.bezier([a, u, v, b])
 
 class Group(Element):
     def __init__(self, elements = ()):
@@ -171,7 +244,7 @@ class Group(Element):
 
     def alignelements(self, anchor1, anchor2):
         for i in range(1, len(self.elements)):
-            self.elements[i].align(anchor1, self.elements[i-1], anchor2)
+            self.elements[i].align(anchor1, self.elements[i-1].a(anchor2))
 
     def draw(self, canvas):
         for e in self.elements:
@@ -181,25 +254,38 @@ class Group(Element):
         self.elements.append(element)
         element.parent = self
 
+    @property
+    def _top(self):
+        return min(e.top for e in self)
+
+    @property
+    def _right(self):
+        return max(e.right for e in self)
+
+    @property
+    def _bottom(self):
+        return max(e.bottom for e in self)
+
+    @property
+    def _left(self):
+        return min(e.left for e in self)
+
     def __len__(self):
         return len(self.elements)
+
+    def __iter__(self):
+        return iter(self.elements)
 
 class HGroup(Group):
     def __init__(self, elements):
         super().__init__(elements)
-        self.width = sum(e.width for e in elements)
-        self.height = max(e.height for e in elements)
-        self.setboxanchors()
-        for e in elements:
+        for e in self.elements:
             e.setheight(self.height)
         self.alignelements('left', 'right')
 
 class VGroup(Group):
     def __init__(self, elements):
         super().__init__(elements)
-        self.width = max(e.width for e in elements)
-        self.height = sum(e.height for e in elements)
-        self.setboxanchors()
-        for e in elements:
+        for e in self.elements:
             e.setwidth(self.width)
         self.alignelements('top', 'bottom')
