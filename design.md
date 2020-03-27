@@ -32,8 +32,9 @@ These primitive shapes are created via methods on the Canvas.
 
 The primitives are mapped to a much smaller number of Drawing Primitives that are processed by the Image Engines:
 
-- circle
-- line
+- circle (change to ellipse?)
+- polyline
+- bezier
 - polygon
 - text
 
@@ -43,7 +44,7 @@ A canvas provides the drawing primitives and has the ability to write output as 
 
 The canvas interface provides methods for drawing the primitives.
 
-A style string is pass to the primitives.
+A style string is passed to the primitives.
 
 The canvas stores a dictionary of styles associated with strings.
 

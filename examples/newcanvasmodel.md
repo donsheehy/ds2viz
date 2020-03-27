@@ -12,7 +12,7 @@ c.line((100,200), (300, 150))
 c.polyline([(10,20), (30, 5), (90,20), (200, 3), (150, 30)])
 c.bezier([(10,20), (30, 55), (90,20), (100, 130)])
 c.text('hello', (140, 300))
-print(c.pngout())
+print(c.svgout())
 # print(c.pdfsave('deleteme.pdf'))
 # print(SVGEngine(c))
 ```

@@ -2,17 +2,30 @@
 
 ## Public Launch
 
+- [ ] styles moved to toml format
+- [ ] color format locked down
 - [ ] Get dependencies into `setup.py`
 - [ ] put it on pypi
 - [ ] do a build test for ds book in fresh pipenv
 - [ ] update note in users guide to the data structures book
 
-
 ## Styles need to be converted to TOML format.
 
 This will make them easier to read and write.
 
-## Alignment should happen w.r.t. least common ancestor
+## Styles should cascade in a reasonable, logical way
+
+When defining styles, it often makes sense to start from a base style and then extend or modify it.
+This is also true for multi-styles (i.e. lists of styles).
+Numerical styles should support a `d` version that indicates the change from the inherited style.  For example `dradius` would give the change in the radius.
+
+
+
+## Dynamic Connectivity and Dependencies
+
+It might make sense to make some connections dependent.
+This would really just mean that we keep anchor info rather than vector info in the Element.
+
 
 ## Colors Need a consistent format
 
@@ -31,13 +44,6 @@ It should be possible to pad and margin the sides differently as in html.
 We need to decide how margins and padding work for alignment.
 Traditionally, padding is a minimum guarantee that is not additive.
 Adjacent elements are spaced so the distance is the max of their padding values.
-
-## Primitives updates
-
-Polylines are more primitive than Lines.
-It should replace `DP_Line` as the main primitive for lines.
-
-Bezier Curves.  It's time.
 
 ## Arrowheads and curve decorations
 

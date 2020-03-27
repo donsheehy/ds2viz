@@ -108,17 +108,15 @@ class Element:
     def _a(self, anchor):
         verticalcenter = (self._top + self._bottom) / 2
         horizontalcenter = (self._left + self._right) / 2
-        self.anchor.update({
-                'top': Vector(horizontalcenter, self._top),
-                'right': Vector(self._right, verticalcenter),
-                'bottom': Vector(horizontalcenter, self._bottom),
-                'left': Vector(self._left, verticalcenter),
-                'center': Vector(horizontalcenter, verticalcenter),
-                'topleft': Vector(self._left, self._top),
-                'topright': Vector(self._right, self._top),
-                'bottomright': Vector(self._right, self._bottom),
-                'bottomleft': Vector(self._left, self._bottom),
-            })
+        self.setanchor('top', (horizontalcenter, self._top))
+        self.setanchor('topright', (self._right, self._top))
+        self.setanchor('right',(self._right, verticalcenter))
+        self.setanchor('bottomright', (self._right, self._bottom))
+        self.setanchor('bottom', (horizontalcenter, self._bottom))
+        self.setanchor('bottomleft', (self._left, self._bottom))
+        self.setanchor('left', (self._left, verticalcenter))
+        self.setanchor('topleft', (self._left, self._top))
+        self.setanchor('center', (horizontalcenter, verticalcenter))
         return self.anchor[anchor]
 
     def a(self, anchor):
