@@ -59,7 +59,7 @@ class SVGEngine(ImageEngine):
         svgpolygon.push("M%f %f" % tuple(points[0]))
         for p in points:
             svgpolygon.push("L%f %f" % tuple(p))
-        svgpolygon.push("L%f %f" % tuple(points[0]))
+        svgpolygon.push("Z")
         self.svg_doc.add(svgpolygon)
 
     def draw_text(self, text):
