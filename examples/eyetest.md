@@ -161,6 +161,7 @@ mytree.drawbox(canvas)
 # mytree.root.drawbox(canvas)
 
 print(canvas.svgout())
+print(canvas.pngout())
 ```
 
 
@@ -183,4 +184,5 @@ mytree.draw(canvas)
 mytree.drawbox(canvas)
 
 print(canvas.svgout())
+print(canvas.pngout())
 ```

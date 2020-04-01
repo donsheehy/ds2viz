@@ -2,14 +2,14 @@
 
 ## Public Launch
 
-- [ ] styles moved to toml format
+- [ ] styles moved to yaml format
 - [ ] color format locked down
 - [ ] Get dependencies into `setup.py`
 - [ ] put it on pypi
 - [ ] do a build test for ds book in fresh pipenv
 - [ ] update note in users guide to the data structures book
 
-## Styles need to be converted to TOML format.
+## Styles need to be converted to YAML format.
 
 This will make them easier to read and write.
 
@@ -17,8 +17,7 @@ This will make them easier to read and write.
 
 When defining styles, it often makes sense to start from a base style and then extend or modify it.
 This is also true for multi-styles (i.e. lists of styles).
-Numerical styles should support a `d` version that indicates the change from the inherited style.  For example `dradius` would give the change in the radius.
-
+Numerical styles should support a `d_` version that indicates the change from the inherited style.  For example `d_radius` would give the change in the radius.
 
 
 ## Dynamic Connectivity and Dependencies
@@ -31,10 +30,6 @@ This would really just mean that we keep anchor info rather than vector info in 
 
 Sticking with webstandard hex is probably best.
 Not sure about opacity?
-
-## Better Boxes
-
-Sides should be proper attributes.
 
 ## Deal properly with margin and padding
 
@@ -53,11 +48,5 @@ Especially needed for groups and circles.
 For groups, an index should give you access to the anchors of the children.
 For circles (and points), a vector should give you an anchor on the boundary.
 
----
-
-# Done
-
-## PDF and PNG Output
-
-Currently svg output is pretty good.
-Getting pdf and/or png output would be better for producing good pdfs.
+This might even do better with a different name, like **target**.
+A target for a given name returns a point.

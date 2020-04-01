@@ -5,6 +5,7 @@ from ds_viz.primitives import *
 from ds_viz.vector import Vector
 from contextlib import contextmanager
 
+
 @contextmanager
 def svg_plus_pdf(width, height, filename, styles = default_styles):
     canvas = Canvas(width, height, default_styles)
@@ -60,7 +61,7 @@ class Canvas:
 
     def bezier(self, points, style = '_line'):
         for s in self.styles[style]:
-            self.addprimitive(DP_Bezier(points, s))        
+            self.addprimitive(DP_Bezier(points, s))
 
     def text(self, text, position, style = '_text'):
         for s in self.styles[style]:

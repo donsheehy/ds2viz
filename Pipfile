@@ -10,10 +10,10 @@ greedypermutation = {editable = true,path = "./../greedypermutation"}
 moviepy = "*"
 pygame = "*"
 gizeh = "*"
-greedypermutation = {editable = true,path = "./../greedypermutation"}
 svgwrite = "*"
 ds2 = "*"
 ds-viz = {editable = true,path = "."}
+pyyaml = "*"
 
 [requires]
 python_version = "3.7"
