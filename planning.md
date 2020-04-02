@@ -1,10 +1,12 @@
-# Planning for ds_viz
+# Planning for dsviz
 
 ## Public Launch
 
-- [ ] styles moved to yaml format
-- [ ] color format locked down
-- [ ] Get dependencies into `setup.py`
+- [x] styles moved to yaml format
+- [x] Get dependencies into `setup.py`
+- [ ] Setup Basic Sphinx Documentation
+- [ ] push to github
+- [ ] make docs visible and change url in setup.py
 - [ ] put it on pypi
 - [ ] do a build test for ds book in fresh pipenv
 - [ ] update note in users guide to the data structures book

@@ -3,8 +3,8 @@
 ### Circle (no label)
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600,100)
 circle = Circle(40)
@@ -17,8 +17,8 @@ print(canvas.svgout())
 ### Text
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600,100)
 text = Text('Hello, world!')
@@ -31,8 +31,8 @@ print(canvas.svgout())
 ### Circle (with label)
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 circle = Circle(20, 'X')
@@ -45,8 +45,8 @@ print(canvas.svgout())
 ### Boxed Text
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 box = Boxed(Text('hi!'))
@@ -59,8 +59,8 @@ print(canvas.svgout())
 ### Lines
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 line = Line((20,20), (150, 40))
@@ -73,8 +73,8 @@ print(canvas.svgout())
 ### SCurve
 
 ```python {cmd output="html" hide}
-from ds_viz.element import SCurve
-from ds_viz.canvas import Canvas
+from dsviz.element import SCurve
+from dsviz.canvas import Canvas
 
 c = SCurve((20, 20), (200, 90))
 canvas = Canvas(600, 130)
@@ -88,8 +88,8 @@ print(canvas.svgout())
 ### Aligned Groups
 
 ```python {cmd output="html" hide}
-from ds_viz.element import *
-from ds_viz.canvas import Canvas
+from dsviz.element import *
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600, 200)
 vg = VGroup([Boxed(Text(txt)) for txt in ['a', 'bb', 'cccc']])
@@ -110,8 +110,8 @@ print(canvas.svgout())
 ### VizList
 
 ```python {cmd output="html" hide}
-from ds_viz.datastructures import VizList
-from ds_viz.canvas import Canvas
+from dsviz.datastructures import VizList
+from dsviz.canvas import Canvas
 
 
 canvas = Canvas(600, 100)
@@ -125,9 +125,9 @@ print(canvas.svgout())
 ### VizNamedReference
 
 ```python {cmd output="html" hide}
-from ds_viz.element import Line
-from ds_viz.datastructures import VizNamedReference
-from ds_viz.canvas import Canvas
+from dsviz.element import Line
+from dsviz.datastructures import VizNamedReference
+from dsviz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 ref = VizNamedReference('objectname')
@@ -144,8 +144,8 @@ print(canvas.svgout())
 
 ```python {cmd output="html" hide}
 from ds2.tree import Tree
-from ds_viz.datastructures import VizTree
-from ds_viz.canvas import Canvas
+from dsviz.datastructures import VizTree
+from dsviz.canvas import Canvas
 
 T = Tree([7, [4, [2, [1], [1], [1]], [5]], [1], [13, ['x'], ['y']]])
 # T = Tree([2, [1, [0]], [1], [1]])
@@ -170,8 +170,8 @@ print(canvas.pngout())
 
 ```python {cmd output="html" hide}
 from ds2.orderedmapping import BSTMapping as BST
-from ds_viz.datastructures import VizBST
-from ds_viz.canvas import Canvas
+from dsviz.datastructures import VizBST
+from dsviz.canvas import Canvas
 
 T = BST()
 for i in [7,2,1,4,3,6,11,9,10,8]:

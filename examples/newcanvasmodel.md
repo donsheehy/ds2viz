@@ -1,6 +1,6 @@
 ```python {cmd output="html"}
-from ds_viz.canvas import Canvas
-from ds_viz.svgengine import SVGEngine
+from dsviz.canvas import Canvas
+from dsviz.svgengine import SVGEngine
 
 
 c = Canvas(600, 480)
@@ -18,8 +18,8 @@ print(c.svgout())
 ```
 
 ```python {cmd output="html"}
-from ds_viz.canvas import Canvas
-from ds_viz.svgengine import SVGEngine
+from dsviz.canvas import Canvas
+from dsviz.svgengine import SVGEngine
 
 c = Canvas(600, 480)
 c.bezier([(10,20), (30, 55), (90,20), (100, 130)])

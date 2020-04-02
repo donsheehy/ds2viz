@@ -1,4 +1,4 @@
-from ds_viz.element import *
+from dsviz.element import *
 
 class VizNamedReference(HGroup):
     def __init__(self, name):

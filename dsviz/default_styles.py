@@ -1,4 +1,4 @@
-from ds_viz.styles import StyleSheet
+from dsviz.styles import StyleSheet
 import os
 
 dir_path = os.path.dirname(os.path.realpath(__file__))

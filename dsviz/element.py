@@ -1,5 +1,5 @@
-from ds_viz.vector import Vector
-# from ds_viz.default_styles import default_styles
+from dsviz.vector import Vector
+# from dsviz.default_styles import default_styles
 from collections import defaultdict, namedtuple
 
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])

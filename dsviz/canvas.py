@@ -1,8 +1,8 @@
-from ds_viz.svgengine import SVGEngine
-from ds_viz.gizehengine import PDFEngine, PNGEngine
-from ds_viz.default_styles import default_styles
-from ds_viz.primitives import *
-from ds_viz.vector import Vector
+from dsviz.svgengine import SVGEngine
+from dsviz.gizehengine import PDFEngine, PNGEngine
+from dsviz.default_styles import default_styles
+from dsviz.primitives import *
+from dsviz.vector import Vector
 from contextlib import contextmanager
 
 

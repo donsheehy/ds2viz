@@ -4,16 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-greedypermutation = {editable = true,path = "./../greedypermutation"}
+ds2 = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
 
 [packages]
-moviepy = "*"
-pygame = "*"
-gizeh = "*"
-svgwrite = "*"
-ds2 = "*"
 ds-viz = {editable = true,path = "."}
-pyyaml = "*"
 
 [requires]
 python_version = "3.7"
