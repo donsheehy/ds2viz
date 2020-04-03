@@ -4,23 +4,19 @@
 
 - [x] styles moved to yaml format
 - [x] Get dependencies into `setup.py`
-- [ ] Setup Basic Sphinx Documentation
+- [x] Setup Basic Sphinx Documentation
 - [ ] push to github
 - [ ] make docs visible and change url in setup.py
 - [ ] put it on pypi
 - [ ] do a build test for ds book in fresh pipenv
 - [ ] update note in users guide to the data structures book
 
-## Styles need to be converted to YAML format.
-
-This will make them easier to read and write.
 
 ## Styles should cascade in a reasonable, logical way
 
 When defining styles, it often makes sense to start from a base style and then extend or modify it.
 This is also true for multi-styles (i.e. lists of styles).
 Numerical styles should support a `d_` version that indicates the change from the inherited style.  For example `d_radius` would give the change in the radius.
-
 
 ## Dynamic Connectivity and Dependencies
 
@@ -34,6 +30,9 @@ Sticking with webstandard hex is probably best.
 Not sure about opacity?
 
 ## Deal properly with margin and padding
+
+Add a method called `boxalignLR(self, other)`.
+It handles alignment of `self.left` with respect to `other.right` taking into account the padding on both.
 
 These are defined in the style.
 It should be possible to pad and margin the sides differently as in html.
