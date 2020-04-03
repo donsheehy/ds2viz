@@ -23,6 +23,8 @@ class Canvas:
     performed by the Canvas.
 
     It is also responsible for ordering the primitives on the z-axis.
+
+    The `styles` argument should be a StyleSheet object.
     """
     def __init__(self, width, height, styles = default_styles):
         self.width = width
@@ -35,7 +37,7 @@ class Canvas:
             # TODO: handle shifting and radius adjustments.
             self._primitives.append(DP_Circle(point, s['radius'], s))
 
-    def line(self, a, b, style = '_line'):
+    def line(self, a, b, style = '_path'):
         for s in self.styles[style]:
             # arrow heads?
             self._primitives.append(DP_Polyline([a, b], s))
@@ -47,7 +49,7 @@ class Canvas:
             # self._primitives.append(Circle(newcenter, newradius, s))
             self._primitives.append(DP_Circle(center, radius, s))
 
-    def rectangle(self, topleft, width, height, style = '_rectangle'):
+    def rectangle(self, topleft, width, height, style = '_polygon'):
         for s in self.styles[style]:
             a = Vector(topleft)
             b = a + Vector(width, 0)
@@ -55,11 +57,15 @@ class Canvas:
             d = a + Vector(0, height)
             self._primitives.append(DP_Polygon([a,b,c,d], s))
 
-    def polyline(self, points, style = '_line'):
+    def polyline(self, points, style = '_path'):
         for s in self.styles[style]:
             self.addprimitive(DP_Polyline(points, s))
 
-    def bezier(self, points, style = '_line'):
+    def polygon(self, points, style = '_polygon'):
+        for s in self.styles[style]:
+            self.addprimitive(DP_Polyline(points, s))
+
+    def bezier(self, points, style = '_path'):
         for s in self.styles[style]:
             self.addprimitive(DP_Bezier(points, s))
 
@@ -73,7 +79,7 @@ class Canvas:
         self._primitives.append(p)
 
     def primitives(self):
-        # Sort the primitives
+        # TODO: Sort the primitives
         return iter(self._primitives)
 
     def pdfsave(self, filename):

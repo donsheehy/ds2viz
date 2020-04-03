@@ -1,5 +1,4 @@
 from dsviz.vector import Vector
-# from dsviz.default_styles import default_styles
 from collections import defaultdict, namedtuple
 
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
@@ -145,7 +144,7 @@ class Empty(Element):
         return False
 
 class Boxed(Element):
-    def __init__(self, element, style = '_rectangle'):
+    def __init__(self, element, style = '_polygon'):
         super().__init__()
         self.element = element
         self.style = style
@@ -204,7 +203,7 @@ class Circle(Element):
             self.label.draw(canvas)
 
 class Line(Element):
-    def __init__(self, a, b, style = '_line'):
+    def __init__(self, a, b, style = '_path'):
         super().__init__()
         self.style = style
         start = Vector(a)

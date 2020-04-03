@@ -9,13 +9,13 @@ _circle:
   stroke: [0,0,0]
   stroke_width: 2
 
-_line:
+_path:
   fill: [1,1,1]
   stroke: [0,0,0]
   stroke_width: 2
   fill: null
 
-_rectangle:
+_polygon:
   fill: [1,1,1]
   stroke: [0,0,0]
   stroke_width: 2
