@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dsviz",
-    version="0.1.0",
+    version="0.1.3",
     author="Donald R. Sheehy",
     author_email="don.r.sheehy@gmail.com",
     description="Don Sheehy's Data Structures Visualizations",
@@ -23,5 +23,6 @@ setuptools.setup(
                   'gizeh',
                   'PyYAML',
                  ],
-    python_requires='>=3.7',
+    python_requires='>=3.6',
+    include_package_data=True,
 )

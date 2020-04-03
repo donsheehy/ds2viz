@@ -9,7 +9,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 
 [packages]
-ds-viz = {editable = true,path = "."}
+dsviz = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"

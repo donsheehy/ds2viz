@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'ds-viz'
+project = 'dsviz'
 copyright = '2020, Donald R. Sheehy'
 author = 'Donald R. Sheehy'
 

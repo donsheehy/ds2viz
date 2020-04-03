@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e097ba9428e0997c4731049b94817d538264a9531ccbaac62b142bdb207a584b"
+            "sha256": "908eabef43d26c539453ad96ef336a7a002803233006d08c72623956e3216793"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -55,16 +55,16 @@
             ],
             "version": "==1.14.0"
         },
-        "ds-viz": {
-            "editable": true,
-            "path": "."
-        },
         "ds2": {
             "hashes": [
                 "sha256:2a87a5439d99e77d2e9d308a4e665e4561ac8592e1aa708e12386b1d734ba906",
                 "sha256:f677b9a83f2f59404ade563b59a32858fec20b77878396bd02ffbaaf40eb57f0"
             ],
             "version": "==0.2.1"
+        },
+        "dsviz": {
+            "editable": true,
+            "path": "."
         },
         "gizeh": {
             "hashes": [
