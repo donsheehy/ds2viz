@@ -1,6 +1,6 @@
 import svgwrite
-from dsviz.primitives import *
-from dsviz.imageengine import ImageEngine, styledefaults
+from ds2viz.primitives import *
+from ds2viz.imageengine import ImageEngine, styledefaults
 
 def rgbtohex(rgb):
     if rgb is None:

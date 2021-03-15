@@ -1,4 +1,4 @@
-# Planning for dsviz
+# Planning for ds2viz
 
 ## Public Launch
 
@@ -10,6 +10,20 @@
 - [ ] put it on pypi
 - [ ] do a build test for ds book in fresh pipenv
 - [ ] update note in users guide to the data structures book
+
+## Push more style info into the elements
+
+Currently, some elements take an optional parameter for the style.
+They should also, optionally take a stylesheet.
+
+- [ ] Add this feature to Element and fix what breaks.
+
+Might also want to add kwargs to overwrite specific styles on the fly.
+
+
+## Style Merge should be more pythonic
+
+Use the more pythonic method of dictionary merging to merge styles.
 
 
 ## Styles should cascade in a reasonable, logical way

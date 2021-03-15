@@ -1,5 +1,5 @@
 import unittest
-from dsviz.styles import Style, StyleSheet, DEFAULT_STYLE
+from ds2viz.styles import Style, StyleSheet, DEFAULT_STYLE
 
 
 SS = {'red': {'stroke': (1,0,0), 'margin': 1},\

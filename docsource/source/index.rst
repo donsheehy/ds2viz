@@ -1,4 +1,4 @@
-dsviz: A Data Structures Visualization Package
+ds2viz: A Data Structures Visualization Package
 ===============================================
 
 by Don Sheehy
@@ -9,7 +9,7 @@ Installation
 
 .. code-block::
 
-  pip install dsviz
+  pip install ds2viz
 
 
 .. toctree::

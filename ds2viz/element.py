@@ -1,16 +1,20 @@
-from dsviz.vector import Vector
+from ds2viz.vector import Vector
+from ds2viz.default_styles import default_styles
 from collections import defaultdict, namedtuple
 
 Box = namedtuple('Box', ['top', 'right', 'bottom', 'left'])
 
 class Element:
-    def __init__(self):
-        self._position = Vector(0,0)
+    def __init__(self, style = '', stylesheet = default_styles, xy=(0,0)):
+        self._position = Vector(xy)
         self._box = Box(0, 0, 0, 0)
         self.anchor = defaultdict(Vector)
         self.tags = set()
-        self.style = []
+        self.stylesheet = stylesheet
+        self.style = style
         self.parent = None
+        self.padding = float(next(stylesheet[style])['padding'])
+        self.margin = float(next(stylesheet[style])['margin'])
 
     @property
     def position(self):
@@ -122,7 +126,7 @@ class Element:
         return self.position + self._a(anchor)
 
 class Text(Element):
-    def __init__(self, text, style = '_text'):
+    def __init__(self, text, style = '_text', stylesheet = default_styles):
         super().__init__()
         self.style = style
         self.text = text
@@ -144,17 +148,16 @@ class Empty(Element):
         return False
 
 class Boxed(Element):
-    def __init__(self, element, style = '_polygon'):
-        super().__init__()
+    def __init__(self,
+                 element,
+                 style = '_polygon',
+                 stylesheet = default_styles):
+        super().__init__(style, stylesheet)
         self.element = element
         self.style = style
         element.parent = self
-        self.padding = 5
-        self.margin = 0
-        # If the margin is not zero, we also have to change how to draw it.
-        assert(self.margin == 0)
-        vshift = self.margin + self.padding
-        hshift = self.margin + self.padding
+        vshift = max(self.margin, element.padding)
+        hshift = max(self.margin, element.padding)
         self._box = Box(0,
                         element.width + 2 * hshift,
                         element.height + 2 * vshift,
@@ -162,7 +165,7 @@ class Boxed(Element):
         self.alignelement()
 
     def draw(self, canvas):
-        topleft = self.globalposition() + self._a('topleft') + Vector(self.margin, self.margin)
+        topleft = self.globalposition() + self._a('topleft')
         canvas.rectangle(topleft,
                              self.width,
                              self.height,
@@ -182,12 +185,11 @@ class Boxed(Element):
         self.alignelement()
 
 class Circle(Element):
-    def __init__(self, radius = 20, label = None, style = '_circle'):
-        super().__init__()
+    def __init__(self, radius = 20, label = None, style = '_circle', stylesheet = default_styles):
+        super().__init__(style, stylesheet)
         margin = 5
         size = 2 * (radius + margin)
         self._box = Box(0, size, size, 0)
-        self.style = style
         if label is not None:
             self.label = Text(str(label))
             self.label.parent = self
@@ -203,9 +205,8 @@ class Circle(Element):
             self.label.draw(canvas)
 
 class Line(Element):
-    def __init__(self, a, b, style = '_path'):
-        super().__init__()
-        self.style = style
+    def __init__(self, a, b, style = '_path', stylesheet = default_styles):
+        super().__init__(style, stylesheet)
         start = Vector(a)
         end = Vector(b)
         self._box = Box(min(start.y, end.y),
@@ -233,15 +234,21 @@ class SCurve(Line):
         canvas.bezier([a, u, v, b])
 
 class Group(Element):
-    def __init__(self, elements = ()):
+    def __init__(self,
+                 elements = (),
+                 style = '',
+                 stylesheet = default_styles):
         super().__init__()
         self.elements = []
         for e in elements:
             self.addelement(e)
 
-    def alignelements(self, anchor1, anchor2):
+    def alignelements(self, anchor1, anchor2, gapvector = Vector(0,0)):
         for i in range(1, len(self.elements)):
-            self.elements[i].align(anchor1, self.elements[i-1].a(anchor2))
+            e0 = self.elements[i-1]
+            e1 = self.elements[i]
+            gap = gapvector * max(e0.padding, e1.padding)
+            e1.align(anchor1, e0.a(anchor2) + gap)
 
     def draw(self, canvas):
         for e in self.elements:
@@ -274,15 +281,15 @@ class Group(Element):
         return iter(self.elements)
 
 class HGroup(Group):
-    def __init__(self, elements):
-        super().__init__(elements)
+    def __init__(self, elements, style = '', stylesheet = default_styles):
+        super().__init__(elements, style, stylesheet)
         for e in self.elements:
             e.setheight(self.height)
-        self.alignelements('left', 'right')
+        self.alignelements('left', 'right', Vector(1,0))
 
 class VGroup(Group):
-    def __init__(self, elements):
-        super().__init__(elements)
+    def __init__(self, elements, style = '', stylesheet = default_styles):
+        super().__init__(elements, style, stylesheet)
         for e in self.elements:
             e.setwidth(self.width)
-        self.alignelements('top', 'bottom')
+        self.alignelements('top', 'bottom', Vector(0, 1))

@@ -1,4 +1,4 @@
-from dsviz.primitives import *
+from ds2viz.primitives import *
 
 styledefaults = {'radius': 3,
                  'fill': (1,1,1),

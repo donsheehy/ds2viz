@@ -1,11 +1,14 @@
-from dsviz.element import *
+from ds2viz.element import *
+from ds2viz.default_styles import default_styles
 
 class VizNamedReference(HGroup):
-    def __init__(self, name):
-        txt = Boxed(Text(name))
-        bpt = Boxed(Circle(5, style = '_point'))
+    def __init__(self, name, style = '', stylesheet = default_styles):
+        # It might make sense to pull out specific features of the
+        # style needed here.
+        txt = Boxed(Text(name, '_text', stylesheet))
+        bpt = Boxed(Circle(5, None, '_point', stylesheet))
         bpt.setwidth(25)
-        super().__init__([txt, bpt])
+        super().__init__([txt, bpt], style, stylesheet)
         self.setanchor('source', self.elements[1].a('center'))
 
 class VizList(HGroup):
@@ -57,3 +60,23 @@ class VizBST(Group):
                 self.addelement(Line(rootcenter, child.a('root')))
                 self.addelement(child)
         self.addelement(self.root)
+
+class VizGraph(Group):
+    def __init__(self, graph, points):
+        """
+        The `points` argument should be a dictionary mapping vertices to
+        points.
+
+        The `graph` object must provide iterators `vertices` and `edges` that
+        yield the vertices and edges respectively.
+        """
+        super().__init__()
+
+        for a,b in graph.edges():
+            self.addelement(Line(points[a], points[b]))
+
+        for a in graph.vertices():
+            # c = Circle(12, a)
+            c = Circle(3)
+            c.align('center', points[a])
+            self.addelement(c)

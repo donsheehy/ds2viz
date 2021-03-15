@@ -94,7 +94,8 @@ Boxes
 
 Putting a box around something is quite natural.
 Boxes have both padding and margin.
-Sometimes the boxes have width or height that is determined based on something in its parent element.  For example, in a vertical list, the width of the boxes, depends on the max width of any box in the list.
+Sometimes the boxes have width or height that is determined based on something in its parent element.
+For example, in a vertical list, the width of the boxes, depends on the max width of any box in the list.
 
 The Figure
 ----------
@@ -103,7 +104,7 @@ The figure is a tree of elements.
 The root is a group.
 There is a total order on the primitive elements so they can be drawn consistently.
 
-The canvas order Elements lexicographically by:
+The canvas orders Elements lexicographically by:
 - The z-order of their style.
 - The creation order.
 
@@ -112,8 +113,8 @@ Elements will often be placed with respect to each others' anchors.
 Models for Data Structure Visualization
 ---------------------------------------
 
-To visualize a data structure, one implements a class that extends `dsviz.Element`.
-Ideally, the initializer takes a single instance of the class to be visualized.
+To visualize a data structure, one implements a class that extends `ds2viz.Element` or `ds2viz.Group`.
+Ideally, the initializer takes a single instance of the class to be visualized and optionally, a style and stylesheet.
 
 The initializer might wrap the data structure in a separately tested wrapper that exposes some of the private attributes of the class.
 
@@ -122,7 +123,7 @@ Styles
 
 Styles are lists of dictionaries.
 
-The standard way to describe styles is in TOML.
+The standard way to describe styles is in YAML.
 
 An object with a particular style will (usually) generate one primitive per style.
 

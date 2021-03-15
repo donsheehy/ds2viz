@@ -3,8 +3,8 @@
 ### Circle (no label)
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600,100)
 circle = Circle(40)
@@ -17,8 +17,8 @@ print(canvas.svgout())
 ### Text
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600,100)
 text = Text('Hello, world!')
@@ -31,8 +31,8 @@ print(canvas.svgout())
 ### Circle (with label)
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 circle = Circle(20, 'X')
@@ -45,8 +45,8 @@ print(canvas.svgout())
 ### Boxed Text
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 box = Boxed(Text('hi!'))
@@ -59,8 +59,8 @@ print(canvas.svgout())
 ### Lines
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 line = Line((20,20), (150, 40))
@@ -73,8 +73,8 @@ print(canvas.svgout())
 ### SCurve
 
 ```python {cmd output="html" hide}
-from dsviz.element import SCurve
-from dsviz.canvas import Canvas
+from ds2viz.element import SCurve
+from ds2viz.canvas import Canvas
 
 c = SCurve((20, 20), (200, 90))
 canvas = Canvas(600, 130)
@@ -88,8 +88,8 @@ print(canvas.svgout())
 ### Aligned Groups
 
 ```python {cmd output="html" hide}
-from dsviz.element import *
-from dsviz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600, 200)
 vg = VGroup([Boxed(Text(txt)) for txt in ['a', 'bb', 'cccc']])
@@ -105,13 +105,17 @@ vg.drawbox(canvas)
 print(canvas.svgout())
 ```
 
+### Aligned Groups with margin and padding
+
+
+
 # Data Structures
 
 ### VizList
 
 ```python {cmd output="html" hide}
-from dsviz.datastructures import VizList
-from dsviz.canvas import Canvas
+from ds2viz.datastructures import VizList
+from ds2viz.canvas import Canvas
 
 
 canvas = Canvas(600, 100)
@@ -125,9 +129,9 @@ print(canvas.svgout())
 ### VizNamedReference
 
 ```python {cmd output="html" hide}
-from dsviz.element import Line
-from dsviz.datastructures import VizNamedReference
-from dsviz.canvas import Canvas
+from ds2viz.element import Line
+from ds2viz.datastructures import VizNamedReference
+from ds2viz.canvas import Canvas
 
 canvas = Canvas(600, 100)
 ref = VizNamedReference('objectname')
@@ -144,8 +148,8 @@ print(canvas.svgout())
 
 ```python {cmd output="html" hide}
 from ds2.tree import Tree
-from dsviz.datastructures import VizTree
-from dsviz.canvas import Canvas
+from ds2viz.datastructures import VizTree
+from ds2viz.canvas import Canvas
 
 T = Tree([7, [4, [2, [1], [1], [1]], [5]], [1], [13, ['x'], ['y']]])
 # T = Tree([2, [1, [0]], [1], [1]])
@@ -170,14 +174,14 @@ print(canvas.pngout())
 
 ```python {cmd output="html" hide}
 from ds2.orderedmapping import BSTMapping as BST
-from dsviz.datastructures import VizBST
-from dsviz.canvas import Canvas
+from ds2viz.datastructures import VizBST
+from ds2viz.canvas import Canvas
 
 T = BST()
 for i in [7,2,1,4,3,6,11,9,10,8]:
     T[i] = i
 
-canvas = Canvas(600, 400)
+canvas = Canvas(600, 260)
 mytree = VizBST(T._root, (20, 10))
 mytree.draw(canvas)
 # mytree.left.drawanchors(canvas)
@@ -185,4 +189,32 @@ mytree.drawbox(canvas)
 
 print(canvas.svgout())
 print(canvas.pngout())
+```
+
+
+### VizGraph
+
+```python {cmd output="html" hide}
+from ds2.graph import Graph
+from ds2viz.datastructures import VizGraph
+from ds2viz.canvas import Canvas
+
+
+vertices = "a40 b55 c92 d77 e00 f29"
+edges = "ab bc cd bc ad bf bd ef"
+V = {vertex: (int(x)*20+30,int(y)*20+30) for (vertex, x, y) in vertices.split()}
+
+E = edges.split()
+
+G = Graph(V, E)
+
+canvas = Canvas(260, 260)
+
+vizG = VizGraph(G, V)
+
+vizG.draw(canvas)
+
+print(canvas.svgout())
+
+
 ```

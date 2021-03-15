@@ -6,8 +6,8 @@ Let's draw a binary search tree.  It should have the property that the left to r
 
 ```python {cmd output="html"}
 from ds2.orderedmapping import BSTMapping as BST
-from dsviz.datastructures import VizBST
-from dsviz.canvas import Canvas
+from ds2viz.datastructures import VizBST
+from ds2viz.canvas import Canvas
 
 T = BST()
 for i in [7,2,1,4,3,6,11,9,10,8]:
@@ -18,7 +18,7 @@ mytree = VizBST(T._root, (20, 10))
 mytree.draw(canvas)
 # mytree.left.drawanchors(canvas)
 
-from dsviz.gizehengine import GizehEngine
+from ds2viz.gizehengine import GizehEngine
 
 print(canvas.pngout())
 # canvas.pdfsave('bst.pdf')
@@ -32,8 +32,8 @@ We should be able to highlight the path taken by a search.
 Here is the old way. (These imports don't even exist anymore.)
 
 ```python
-from dsviz.gizehcanvas import Canvas
-from dsviz.vizbst import drawtree, drawpathtoroot
+from ds2viz.gizehcanvas import Canvas
+from ds2viz.vizbst import drawtree, drawpathtoroot
 from ds2.orderedmapping import BSTMapping as BST
 
 canvas = Canvas(height= 200)

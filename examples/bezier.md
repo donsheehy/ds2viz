@@ -10,10 +10,10 @@ c = (150, 50)
 d = (170, 30)
 points = [a,b,c,d]
 
-props = {'stroke' : (0,0,0), 'stroke_width' : 5}
+props = {'stroke' : (0,0,0), 'stroke_width' : 2}
 
 for p in points:
-  gizeh.circle(r = 10, xy = p, **props).draw(canvas)
+  gizeh.circle(r = 2, xy = p, **props).draw(canvas)
 
 
 bez = gizeh.bezier_curve(points, **props)

@@ -1,6 +1,6 @@
 import gizeh
-from dsviz.primitives import *
-from dsviz.imageengine import ImageEngine, styledefaults
+from ds2viz.primitives import *
+from ds2viz.imageengine import ImageEngine, styledefaults
 
 stylerenames = {'font_weight': 'fontweight',
              'font_size' : 'fontsize',

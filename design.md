@@ -1,6 +1,17 @@
-# Design Ideas for `dsviz`
+# Design Ideas for `ds2viz`
+
+## We've Moved!
+
+The main design document is now found as part of the documentation in `/docsource/design.rst`.
 
 ## Brainstorm
+
+### Margin and Padding
+
+The margin indicates space within the box of an element.
+The padding is indicates space outside the box of an element.
+
+Padding should be used exclusively by code that does alignment.
 
 ### The figure
 
@@ -46,7 +57,7 @@ support z order as a style feature.
 
 Are arrow heads part of the style?
 
-Styles could just be namedtuples that start from a deault and use the replace method
+Styles could just be `namedtuples` that start from a default and use the replace method
 
 ### Drawing Data Structures
 
@@ -86,7 +97,7 @@ class ExposedDataStructure:
 
     _b = b
 
-from dsviz.element import Element
+from ds2viz.element import Element
 class VizDataStructure(Element):
     def __init__(self, ds):
         self.ds = ExposedDataStructure(ds)

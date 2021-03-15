@@ -1,5 +1,9 @@
 class Vector:
     def __init__(self, x = (0,0), y = None):
+        """
+        Initialize a new vector by passing either a pair of coordinates or an
+        iterable of length 2 containing the coordinates.
+        """
         if y is None:
             self.x, self.y = x
         else:
@@ -11,6 +15,9 @@ class Vector:
 
     def __sub__(self, other):
         return Vector(self.x - other.x, self.y - other.y)
+
+    def __mul__(self, other):
+        return Vector(self.x * other, self.y * other)
 
     def __iter__(self):
         yield self.x

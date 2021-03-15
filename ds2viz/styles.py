@@ -5,8 +5,10 @@ class Style(dict):
         output = dict(self)
         output.update(other)
         return Style(output)
+        # return Style(**self, **other)
         # TODO: Handle differential settings.
 
+# All other styles build on top of this one.
 DEFAULT_STYLE = Style({
     'fontfamily' : 'monospace',
     'fontsize' : '32pt',
@@ -24,17 +26,21 @@ class StyleSheet:
     def __init__(self, sheet):
         self.styles = {}
         for name, value in sheet.items():
-            self.styles[name] = []
-            if isinstance(value, list):
-                for s in value:
-                    if isinstance(s, str):
-                        self.styles[name].append(s)
-                    else:
-                        self.styles[name].append(Style(s))
-            elif isinstance(value, dict):
-                self.styles[name].append(Style(value))
-            else:
-                raise TypeError("Styles must be str, dict, or list.")
+            self.addstyle(name, value)
+
+    def addstyle(self, name, value):
+        self.styles[name] = []
+        if isinstance(value, list):
+            for s in value:
+                if isinstance(s, str):
+                    self.styles[name].append(s)
+                else:
+                    self.styles[name].append(Style(s))
+        elif isinstance(value, dict):
+            self.styles[name].append(Style(value))
+        else:
+            raise TypeError("Styles must be str, dict, or list.")
+
 
     @staticmethod
     def fromyaml(yamlfilename):
@@ -43,6 +49,9 @@ class StyleSheet:
 
     def __getitem__(self, stylename):
         return self.get(stylename, DEFAULT_STYLE, set())
+
+    def __contains__(self, style):
+        return style in self.styles
 
     def get(self, stylename, previous, memo):
         if stylename in memo:

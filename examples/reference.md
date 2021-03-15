@@ -1,8 +1,8 @@
 ```python {cmd output="html"}
-from dsviz.datastructures import *
-from dsviz.element import Circle
-from dsviz.canvas import Canvas
-from dsviz.vector import Vector
+from ds2viz.datastructures import *
+from ds2viz.element import Circle
+from ds2viz.canvas import Canvas
+from ds2viz.vector import Vector
 
 canvas = Canvas(600, 300)
 key = VizNamedReference('key')

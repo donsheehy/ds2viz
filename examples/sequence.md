@@ -4,8 +4,8 @@ Given a sequence, we'd like to lay it out on a kind of tape.
 This is most useful for arrays.
 
 ```python {cmd output=html}
-from dsviz.canvas import Canvas
-from dsviz.vizsequence import drawlist
+from ds2viz.canvas import Canvas
+from ds2viz.vizsequence import drawlist
 
 canvas = Canvas()
 
@@ -18,9 +18,9 @@ print(canvas.tohtml())
 ```
 
 ```python {cmd output="html"}
-from dsviz.canvas import Canvas
-from dsviz.element import *
-from dsviz.datastructures import VizList
+from ds2viz.canvas import Canvas
+from ds2viz.element import *
+from ds2viz.datastructures import VizList
 
 canvas = Canvas(600, 200)
 

@@ -1,14 +1,14 @@
-from dsviz.svgengine import SVGEngine
-from dsviz.gizehengine import PDFEngine, PNGEngine
-from dsviz.default_styles import default_styles
-from dsviz.primitives import *
-from dsviz.vector import Vector
+from ds2viz.svgengine import SVGEngine
+from ds2viz.gizehengine import PDFEngine, PNGEngine
+from ds2viz.default_styles import default_styles
+from ds2viz.primitives import *
+from ds2viz.vector import Vector
 from contextlib import contextmanager
 
 
 @contextmanager
 def svg_plus_pdf(width, height, filename, styles = default_styles):
-    canvas = Canvas(width, height, default_styles)
+    canvas = Canvas(width, height, styles)
     yield canvas
     canvas.svgsave(filename + '.svg')
     canvas.pdfsave(filename + '.pdf')

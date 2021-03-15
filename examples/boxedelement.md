@@ -1,7 +1,7 @@
 ```python {cmd output="html"}
-from dsviz.element import *
-from dsviz.canvas import Canvas
-from dsviz.vector import Vector
+from ds2viz.element import *
+from ds2viz.canvas import Canvas
+from ds2viz.vector import Vector
 
 atext = Text('top')
 a = Boxed(atext)
