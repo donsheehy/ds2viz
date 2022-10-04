@@ -1,3 +1,4 @@
+from ds2viz.tikzengine import TikzEngine
 from ds2viz.svgengine import SVGEngine
 from ds2viz.gizehengine import PDFEngine, PNGEngine
 from ds2viz.default_styles import default_styles
@@ -96,3 +97,6 @@ class Canvas:
 
     def svgout(self, filename = None):
         return str(SVGEngine(self))
+
+    def tikzout(self, filename = None):
+        return str(TikzEngine(self))
