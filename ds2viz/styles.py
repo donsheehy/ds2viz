@@ -47,6 +47,10 @@ class StyleSheet:
         with open(yamlfilename, 'r') as f:
             return StyleSheet(yaml.load(f.read(), Loader=yaml.FullLoader))
 
+    @staticmethod
+    def fromstring(str):
+        return StyleSheet(yaml.load(str, Loader=yaml.FullLoader))
+
     def __getitem__(self, stylename):
         return self.get(stylename, DEFAULT_STYLE, set())
 
