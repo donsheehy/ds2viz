@@ -223,6 +223,14 @@ class Line(Element):
         b = pos + self._a('end')
         canvas.line(a, b, self.style)
 
+class Polygon(Element):
+    def __init__(self, points, style='_path', stylesheet=default_styles):
+        super().__init__(style, stylesheet)
+        self.points = points
+
+    def draw(self, canvas):
+        canvas.polygon(self.points, self.style)
+
 class SCurve(Line):
     def draw(self, canvas):
         right = Vector(60, 0)
