@@ -226,7 +226,9 @@ class Line(Element):
 class Polygon(Element):
     def __init__(self, points, style='_path', stylesheet=default_styles):
         super().__init__(style, stylesheet)
+        x_coords, y_coords = zip(*points)
         self.points = points
+        self._box = Box(min(y_coords), max(x_coords), max(y_coords), min(x_coords))
 
     def draw(self, canvas):
         canvas.polygon(self.points, self.style)
