@@ -71,3 +71,6 @@ class StyleSheet:
                     previous = next(self.get(s['base'], previous, memo))
                 previous = previous | s
                 yield previous
+
+    def __iter__(self):
+        return iter(self.styles)
