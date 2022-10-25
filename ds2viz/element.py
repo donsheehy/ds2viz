@@ -10,11 +10,19 @@ class Element:
         self._box = Box(0, 0, 0, 0)
         self.anchor = defaultdict(Vector)
         self.tags = set()
+        self.parent = None
+        self.update_style(style, stylesheet)
+
+    def update_style(self, style, stylesheet):
         self.stylesheet = stylesheet
         self.style = style
-        self.parent = None
-        self.padding = float(next(stylesheet[style])['padding'])
-        self.margin = float(next(stylesheet[style])['margin'])
+
+        if style in stylesheet:
+            self.padding = float(next(stylesheet[style])['padding'])
+            self.margin = float(next(stylesheet[style])['margin'])
+        else:
+            self.padding = 0
+            self.margin = 0
 
     @property
     def position(self):
@@ -248,7 +256,7 @@ class Group(Element):
                  elements = (),
                  style = '',
                  stylesheet = default_styles):
-        super().__init__()
+        super().__init__(style, stylesheet)
         self.elements = []
         for e in elements:
             self.addelement(e)
@@ -264,7 +272,12 @@ class Group(Element):
         for e in self.elements:
             e.draw(canvas)
 
-    def addelement(self, element):
+    def addelement(self, element, style = None):
+        if style in element.stylesheet:
+            element.update_style(style, element.stylesheet)
+        elif style in self.stylesheet:
+            element.update_style(style, self.stylesheet)
+
         self.elements.append(element)
         element.parent = self
 
